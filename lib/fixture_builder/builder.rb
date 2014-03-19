@@ -88,7 +88,7 @@ module FixtureBuilder
       begin
         fixtures = tables.inject([]) do |files, table_name|
           table_klass = table_name.classify.constantize rescue nil
-          if table_klass && table_klass < ActiveRecord::Base
+          if table_klass && table_klass.superclass == ActiveRecord::Base
             rows = table_klass.unscoped do
               table_klass.all.collect do |obj|
                 attrs = obj.attributes
